@@ -1,0 +1,68 @@
+{% extends 'registration/base.html' %}
+{% load static %}
+{% load app_tags %} {# Make sure tags are loaded if needed elsewhere #}
+
+{% block title %}My Profile - Grit & Grace{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4 text-center">My Workshop Registration Profile</h2>
+
+{% if registration %}
+<section class="profile-section card">
+  <div class="card-header">
+    <i class="fas fa-id-card"></i> Your Submitted Information
+  </div>
+  <div class="card-body profile-details">
+    <dl class="dl-row">
+      <dt><i class="fas fa-user"></i> Full Name</dt>
+      <dd>{{ registration.full_name }}</dd>
+
+      <dt><i class="fas fa-envelope"></i> Email Address</dt>
+      <dd>{{ registration.email }}</dd>
+
+      <dt><i class="fas fa-map-marker-alt"></i> Location</dt>
+      <dd>{{ registration.location }}</dd>
+
+      <dt><i class="fas fa-birthday-cake"></i> Age Group</dt>
+      <dd>{{ registration.get_age_group_display }}</dd>
+
+      <dt><i class="fas fa-briefcase"></i> Current Situation</dt>
+      <dd>{{ registration.get_current_situation_display }}</dd>
+
+      <dt><i class="fas fa-chart-line"></i> Freelancing Experience</dt>
+      <dd>{{ registration.get_freelance_experience_display }}</dd>
+
+      <dt><i class="fas fa-calendar-check"></i> Registered At</dt>
+      <dd>{{ registration.registered_at|date:"F j, Y, g:i A" }}</dd>
+    </dl>
+  </div>
+  {# Updated card-footer section #}
+  <div class="card-footer text-center">
+    <a href="{% url 'register' %}" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to Registration</a>
+    {# Removed the "Edit Profile" link #}
+  </div>
+</section>
+
+{% elif error_message %}
+<div class="alert alert-warning" role="alert">
+   <i class="fas fa-exclamation-triangle"></i>
+   <div class="alert-content">
+        <h4 class="alert-heading"> Profile Not Found</h4>
+        <p>{{ error_message }}</p>
+        <hr />
+        <p class="mb-0">If you haven't registered yet, please go to the registration page.</p>
+        <a href="{% url 'register' %}" class="btn btn-primary mt-3"><i class="fas fa-clipboard-list"></i> Register Now</a>
+    </div>
+</div>
+
+{% else %}
+<div class="alert alert-info">
+     <i class="fas fa-info-circle"></i>
+     <div class="alert-content">
+        Could not retrieve profile details. Please try again later or contact support.
+     </div>
+</div>
+{% endif %}
+
+{% endblock %}

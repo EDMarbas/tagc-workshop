@@ -1,0 +1,149 @@
+{% extends 'registration/base.html' %}
+{% load static %}
+{% load app_tags %} {# Keep custom tags if used for form rendering #}
+
+{% block title %}Workshop Registration - Grit & Grace{% endblock %}
+
+{% block content %}
+
+    {% if submitted %}
+        {# Thank You Message Section #}
+        <div class="thank-you-message">
+            <h2><i class="fas fa-check-circle" style="color: var(--success-color);"></i> Thank You for Registering!</h2>
+            <p class="lead">Your spot is reserved. We look forward to seeing you!</p>
+            <hr>
+            <p><a href="{% url 'profile' %}" class="btn btn-success"><i class="fas fa-user-check"></i> View My Profile</a></p>
+        </div>
+
+        {# Optional: Repeat key workshop info after successful registration #}
+        <div class="workshop-info-footer">
+            <hr>
+            <h3><i class="fas fa-feather-alt"></i> GRIT & GRACE FREELANCING</h3>
+            <p><strong><i class="fas fa-map-marked-alt"></i> Where:</strong> Tagum Alliance Gospel Church</p>
+            <p><strong><i class="fas fa-calendar-alt"></i> When:</strong> May 18, 2025 | 2:00 – 4:30 PM</p>
+        </div>
+
+    {% else %}
+        {# Registration Form Section #}
+        <div class="registration-form card"> {# Added card class for consistency #}
+            <div class="card-header">
+                 <i class="fas fa-clipboard-list"></i> Register for the Workshop
+            </div>
+            <div class="card-body">
+                <p class="mb-4 text-center" style="font-size: 1.1em;">Please fill out the form below to reserve your spot.</p>
+
+                <form method="post" novalidate class="needs-validation">
+                    {% csrf_token %}
+
+                    <h4 class="form-section-title"><i class="fas fa-user-edit"></i> Personal Information</h4>
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %} {{ error }} {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {# Full Name #}
+                    <div class="input-group mb-3">
+                        <label for="{{ form.full_name.id_for_label }}" class="form-label">{{ form.full_name.label }}</label>
+                        {{ form.full_name.as_widget|attr:"class:form-control"|attr:"required"|add_error_class:form.full_name.errors }}
+                        {% if form.full_name.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.full_name.errors %} {{ error }} {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {# Email #}
+                    <div class="input-group mb-3">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+                        {{ form.email.as_widget|attr:"class:form-control"|attr:"required"|add_error_class:form.email.errors }}
+                         {% if form.email.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %} {{ error }} {% endfor %}
+                            </div>
+                         {% endif %}
+                    </div>
+
+                    {# Location #}
+                     <div class="input-group mb-3">
+                        <label for="{{ form.location.id_for_label }}" class="form-label">{{ form.location.label }}</label>
+                        {{ form.location.as_widget|attr:"class:form-control"|attr:"required"|add_error_class:form.location.errors }}
+                         {% if form.location.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.location.errors %} {{ error }} {% endfor %}
+                            </div>
+                         {% endif %}
+                    </div>
+
+
+                    <h4 class="form-section-title"><i class="fas fa-info-circle"></i> Your Details</h4>
+
+                    {# Age Group #}
+                    <div class="input-group mb-3 {% if form.age_group.errors %}is-invalid{% endif %}">
+                        <span class="radio-group-label required">{{ form.age_group.label }}</span> {# Added required class #}
+                        {% for radio in form.age_group %}
+                        <div class="form-check">
+                            {{ radio.tag|attr:"class:form-check-input"|add_error_class:form.age_group.errors }} {# Add error class to input if needed #}
+                            <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                        </div>
+                        {% endfor %}
+                        {% if form.age_group.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.age_group.errors %} {{ error }} {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {# Current Situation #}
+                    <div class="input-group mb-3 {% if form.current_situation.errors %}is-invalid{% endif %}">
+                        <span class="radio-group-label required">{{ form.current_situation.label }}</span> {# Added required class #}
+                         {% for radio in form.current_situation %}
+                        <div class="form-check">
+                            {{ radio.tag|attr:"class:form-check-input"|add_error_class:form.current_situation.errors }}
+                            <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                        </div>
+                        {% endfor %}
+                         {% if form.current_situation.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.current_situation.errors %} {{ error }} {% endfor %}
+                            </div>
+                         {% endif %}
+                    </div>
+
+                    {# Freelance Experience #}
+                    <div class="input-group mb-3 {% if form.freelance_experience.errors %}is-invalid{% endif %}">
+                        <span class="radio-group-label required">{{ form.freelance_experience.label }}</span> {# Added required class #}
+                         {% for radio in form.freelance_experience %}
+                        <div class="form-check">
+                            {{ radio.tag|attr:"class:form-check-input"|add_error_class:form.freelance_experience.errors }}
+                            <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                        </div>
+                        {% endfor %}
+                         {% if form.freelance_experience.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.freelance_experience.errors %} {{ error }} {% endfor %}
+                            </div>
+                         {% endif %}
+                    </div>
+
+                    <hr class="my-4">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                             <i class="fas fa-paper-plane"></i> SUBMIT REGISTRATION
+                         </button>
+                    </div>
+                    {# --- NEW Disclaimer --- #}
+                    <div class="form-disclaimer">
+                         <i class="fas fa-info-circle"></i> {# Added an icon #}
+                         This form is created and managed by the <strong>TAGC Livelihood Ministry</strong> for the purpose of organizing the <strong>GRIT & GRACE FREELANCING</strong> workshop. The information you provide will be used solely for coordinating your participation, sending important updates, and preparing workshop materials.
+                         <br>
+                         All submitted data will be handled with care, kept confidential, and used only for workshop-related purposes. By submitting this form, you agree to the collection and use of your information as described.
+                    </div>
+                    {# --- End Disclaimer --- #}
+                </form>
+             </div> {# End card-body #}
+        </div> {# End registration-form card #}
+    {% endif %}
+
+{% endblock %}
