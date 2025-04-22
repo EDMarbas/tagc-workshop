@@ -25,51 +25,66 @@
             --font-heading: 'Merriweather', serif;
         }
 
-        /* --- BODY & CONTAINER (unchanged) --- */
+        /* --- NEW: Full Height Layout --- */
+        html {
+            height: 100%; /* Ensure HTML takes full height */
+            margin: 0;
+        }
         body {
+            min-height: 100vh; /* Ensure body is at least viewport height */
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
             font-family: var(--font-body);
             color: var(--text-color);
-            margin: 0;
-            padding-top: 80px; /* Adjust for fixed navbar height */
-            padding-bottom: 40px;
-            background-color: #EAEAEA; /* Fallback solid color */
-            /* Optional: Keep background image if desired, ensure static path is correct */
-            /* background-image: url("{% static 'media/body_bg.png' %}");
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center center;
-            background-attachment: fixed;
-            line-height: 1.6; */
+            margin: 0; /* Removed margin from here as well */
+            padding-top: 80px; /* Default for fixed navbar */
+            padding-bottom: 0; /* Remove body bottom padding */
+            background-color: #EAEAEA;
+            line-height: 1.6;
+            box-sizing: border-box; /* Include padding/border in element's total width/height */
         }
+         /* --- END NEW: Full Height Layout --- */
+
         .container {
             width: 90%;
             max-width: 1100px;
             margin: 0 auto;
-            padding: 20px 0;
+            padding-top: 20px; /* Adjust top/bottom padding as needed */
+            padding-bottom: 40px; /* Add back bottom padding here or adjust as needed */
+             /* NEW: Make content area grow */
+             flex-grow: 1;
         }
 
-        /* --- NAVBAR STYLES (unchanged) --- */
+        /* --- NAVBAR STYLES (unchanged basic styles) --- */
         .navbar {
             background-color: var(--primary-color);
             color: var(--light-text-color);
             padding: 15px 0;
-            position: fixed;
+            position: fixed; /* Keep fixed */
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
-        .navbar .container {
+        /* ... rest of navbar styles ... */
+         .navbar .container {
              display: flex;
              justify-content: space-between;
              align-items: center;
-             padding: 0 5%;
+             padding: 0 5%; /* Padding within navbar container */
+             flex-grow: 0; /* Prevent navbar container from growing */
+             /* Reset other container styles if needed for navbar */
+             width: auto;
+             max-width: none;
+             margin: 0 auto; /* Center navbar content */
+             padding-top: 0;
+             padding-bottom: 0;
         }
         .navbar-brand {
             font-family: var(--font-heading);
             font-weight: 700;
-            font-size: 1.8em;
+            font-size: 1.8em; /* Default size */
             color: var(--light-text-color);
             text-decoration: none;
             white-space: nowrap;
@@ -77,11 +92,17 @@
             align-items: center;
             flex-shrink: 0;
         }
-        .navbar-brand i {
+        .navbar-brand img {
+            height: 60px; /* Default logo size */
             margin-right: 8px;
         }
+        .navbar-brand:hover {
+            color: var(--light-text-color);
+            text-decoration: none;
+            background-color: transparent;
+        }
         .navbar-toggler {
-            display: none;
+            display: none; /* Hidden by default */
             background: none;
             border: 1px solid var(--light-text-color);
             color: var(--light-text-color);
@@ -98,22 +119,22 @@
             padding: 0;
             margin: 0;
             display: flex;
-            gap: 20px;
+            gap: 1px;
             align-items: center;
         }
         .navbar-nav .nav-link {
             color: var(--light-text-color);
             text-decoration: none;
-            padding: 8px 15px;
+            padding: 8px 10px;
             border-radius: 4px;
             transition: background-color 0.3s ease, color 0.3s ease;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             white-space: nowrap;
         }
         .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link.active { /* Assuming you might add an 'active' class */
+        .navbar-nav .nav-link.active {
             background-color: rgba(255, 255, 255, 0.2);
         }
          .navbar-nav .nav-link.disabled {
@@ -127,19 +148,121 @@
          }
         .navbar-collapse {
              display: flex;
-             justify-content: space-between; /* This will push the second ul to the right */
+             justify-content: space-between;
              width: 100%;
              align-items: center;
          }
-         .navbar-collapse > .navbar-nav:first-of-type {
-             /* Remove margin if you want the brand and first links closer */
-             /* margin-left: 30px; */
+         .navbar-collapse > .navbar-nav:last-of-type {
+             /* Pushes this group to the right */
          }
-          .navbar-collapse > .navbar-nav:last-of-type {
-             /* No specific margin needed if justify-content: space-between is used */
-             /* margin-left: auto; */
+
+
+        /* --- GENERAL CONTENT STYLES (unchanged) --- */
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); color: var(--primary-color); margin-top: 1.5em; margin-bottom: 0.8em; }
+        h1 { font-size: 2.5em; line-height: 1.2; } h2 { font-size: 2em; line-height: 1.25; } h3 { font-size: 1.75em; line-height: 1.3; } h4 { font-size: 1.5em; line-height: 1.35; }
+        p { margin-bottom: 1em; }
+        a { color: var(--primary-color); text-decoration: none; transition: color 0.3s ease; }
+        a:hover { text-decoration: underline; color: #003380; }
+        ul, ol { padding-left: 25px; margin-bottom: 1em; }
+        li { margin-bottom: 0.5em; }
+        hr { border: 0; height: 1px; background-color: var(--border-color); margin: 2em 0; }
+
+        /* --- UTILITY CLASSES (unchanged) --- */
+        .text-center { text-align: center; } .mb-1 { margin-bottom: 0.25rem; } .mb-2 { margin-bottom: 0.5rem; } .mb-3 { margin-bottom: 1rem; } .mb-4 { margin-bottom: 1.5rem; } .mt-3 { margin-top: 1rem; } .mt-4 { margin-top: 1.5rem; } .py-4 { padding-top: 1.5rem; padding-bottom: 1.5rem; } .px-3 { padding-left: 1rem; padding-right: 1rem; } .fw-bold { font-weight: 700; } .text-primary { color: var(--primary-color) !important; } .text-secondary { color: #555 !important; } .text-muted { color: #6c757d !important; } .lead { font-size: 1.25rem; font-weight: 300; } .rounded { border-radius: 0.375rem; } .shadow { box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); }
+
+        /* --- BUTTONS (unchanged) --- */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 400; line-height: 1.5; color: var(--light-text-color); text-align: center; text-decoration: none; vertical-align: middle; cursor: pointer; user-select: none; background-color: var(--primary-color); border: 1px solid var(--primary-color); padding: 0.5rem 1rem; font-size: 1rem; border-radius: 0.375rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; } .btn i { line-height: 1; } .btn:hover { background-color: #003380; border-color: #002a69; color: var(--light-text-color); text-decoration: none; } .btn:focus { outline: 0; box-shadow: 0 0 0 0.25rem rgba(0, 71, 171, 0.5); } .btn-lg { padding: 0.75rem 1.5rem; font-size: 1.25rem; gap: 10px; } .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.875rem; gap: 5px; } .btn-secondary { color: var(--text-color); background-color: #6c757d; border-color: #6c757d; } .btn-secondary:hover { background-color: #5a6268; border-color: #545b62; color: var(--light-text-color); } .btn-secondary:focus { box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.5); } .btn-success { color: #fff; background-color: var(--success-color); border-color: var(--success-color); } .btn-success:hover { background-color: #1f7a36; border-color: #1a632d; } .btn-success:focus { box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.5); } .btn.disabled, .btn:disabled { pointer-events: none; opacity: 0.65; }
+
+        /* --- FORMS (unchanged) --- */
+        .form-label { display: block; margin-bottom: 0.5rem; font-weight: 700; } label[for$='*']::after, .radio-group-label.required::after, span.required::after { content: " *"; color: var(--error-color); margin-left: 2px; } .form-control { display: block; width: 100%; padding: 0.5rem 0.75rem; font-size: 1rem; font-weight: 400; line-height: 1.5; color: var(--text-color); background-color: #fff; background-clip: padding-box; border: 1px solid var(--border-color); border-radius: 0.375rem; transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; box-sizing: border-box; } textarea.form-control { min-height: calc(1.5em + 1rem + 2px); } .form-control:focus { color: var(--text-color); background-color: #fff; border-color: var(--primary-color); outline: 0; box-shadow: 0 0 0 0.25rem rgba(0, 71, 171, 0.25); } .form-check { display: block; min-height: 1.5rem; padding-left: 1.75em; margin-bottom: 0.5rem; position: relative; } .form-check .form-check-input { float: left; margin-left: -1.75em; margin-top: 0.15em; width: 1.25em; height: 1.25em; cursor: pointer; } .form-check input[type="radio"] { border-radius: 50%; } .form-check input[type="checkbox"] { border-radius: 0.25em; } .form-check input[type="radio"]:checked, .form-check input[type="checkbox"]:checked { background-color: var(--primary-color); border-color: var(--primary-color); } .form-check input[type="radio"]:focus, .form-check input[type="checkbox"]:focus { border-color: var(--primary-color); outline: 0; box-shadow: 0 0 0 0.25rem rgba(0, 71, 171, 0.25); } .form-check .form-check-label { display: inline-block; cursor: pointer; padding-top: 0.10em; } .radio-group-label { font-weight: 700; display: block; margin-bottom: 0.5rem; } .invalid-feedback { display: none; width: 100%; margin-top: 0.25rem; font-size: 0.875em; color: var(--error-color); } .form-control.is-invalid, textarea.is-invalid, select.is-invalid, .form-check-input.is-invalid { border-color: var(--error-color); background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23D8000C'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23D8000C' stroke='none'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1rem 1rem; padding-right: calc(1.5em + 0.75rem); } .form-control.is-invalid:focus, textarea.is-invalid:focus, select.is-invalid:focus, .form-check-input.is-invalid:focus { border-color: var(--error-color); box-shadow: 0 0 0 0.25rem rgba(216, 0, 12, 0.25); } .form-check-input.is-invalid ~ .form-check-label { color: var(--error-color); } .input-group.is-invalid .invalid-feedback, .form-control.is-invalid ~ .invalid-feedback, .form-check-input.is-invalid ~ .invalid-feedback { display: block; }
+        .form-disclaimer { font-size: 0.9em; font-style: italic; color: #555; background-color: #f8f9fa; border-left: 4px solid var(--accent-color); padding: 10px 15px; margin-top: 1.5rem; margin-bottom: 1.5rem; border-radius: 4px; line-height: 1.5; } .form-disclaimer strong { color: var(--primary-color); font-style: normal; }
+
+        /* --- CARD STYLES (unchanged) --- */
+        .card { position: relative; display: flex; flex-direction: column; min-width: 0; word-wrap: break-word; background-color: #fff; background-clip: border-box; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 4px 8px rgba(0,0,0,0.08); } .card-header { padding: 1rem 1.25rem; margin-bottom: 0; background-color: var(--secondary-color); border-bottom: 1px solid rgba(0, 0, 0, 0.1); font-weight: 700; color: var(--primary-color); display: flex; align-items: center; gap: 8px; } .card-header:first-child { border-radius: 8px 8px 0 0; } .card-body { flex: 1 1 auto; padding: 1.5rem; } .card-footer { padding: 1rem 1.25rem; background-color: #f8f9fa; border-top: 1px solid rgba(0, 0, 0, 0.1); } .card-footer:last-child { border-radius: 0 0 8px 8px; }
+
+        /* --- ALERT STYLES (unchanged) --- */
+        .alert { position: relative; padding: 1rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: 0.375rem; display: flex; align-items: center; gap: 10px; } .alert i { font-size: 1.25em; line-height: 1; } .alert-content { flex-grow: 1; } .alert-heading { color: inherit; font-family: var(--font-heading); margin-top: 0; margin-bottom: 0.5rem; font-size: 1.25em; } .alert-danger { color: #6a1a21; background-color: #f8d7da; border-color: #f5c2c7; } .alert-danger i { color: #842029; } .alert-warning { color: #664d03; background-color: #fff3cd; border-color: #ffecb5; } .alert-warning i { color: #cca300; } .alert-info { color: #055160; background-color: #cff4fc; border-color: #b6effb; } .alert-info i { color: #067084; } .alert-success { color: #0a3622; background-color: #d1e7dd; border-color: #badbcc; } .alert-success i { color: #0f5132; }
+
+        /* --- PAGE SPECIFIC STYLES (unchanged) --- */
+        .workshop-header { text-align: center; margin-top: 0; /* Removed top margin */ margin-bottom: 20px; padding: 30px 20px; background: linear-gradient(135deg, var(--secondary-color), #ffffff); color: var(--text-color); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-left: 5px solid var(--primary-color); } .workshop-header h1 { margin-bottom: 15px; font-weight: 700; color: var(--primary-color); font-size: 2.8em; } .workshop-header .lead { color: #555; margin-bottom: 10px; font-size: 1.3em; } .workshop-header .organizer { font-style: italic; color: var(--primary-color); font-weight: 500; margin-top: 15px; } .workshop-header hr { width: 60%; margin: 25px auto; border: none; border-top: 2px dashed var(--primary-color); opacity: 0.6; } .workshop-header h1 i, .workshop-header .organizer i { margin-right: 8px; } .workshop-details p { margin-bottom: 8px; font-size: 1.1em; line-height: 1.5; display: flex; align-items: center; justify-content: center; gap: 8px; } .workshop-details p strong { color: var(--primary-color); } .workshop-details i { color: var(--primary-color); width: 1.2em; text-align: center; flex-shrink: 0; } .workshop-details .deadline { color: #777; font-size: 0.95em; } .workshop-details .deadline strong { color: #777; }
+        .registration-form, .profile-section { background: var(--light-text-color); padding: 35px 40px; border-radius: 8px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); margin-bottom: 30px; } .form-section-title { margin-top: 30px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-color); font-size: 1.4em; color: var(--primary-color); display: flex; align-items: center; gap: 8px; } .registration-form h4:first-of-type, .profile-section h4:first-of-type { margin-top: 0; } .input-group { margin-bottom: 1.5rem; }
+        .thank-you-message { text-align: center; padding: 40px 20px; background-color: #E6F7FF; border: 1px solid #91D5FF; color: #0050B3; border-radius: 8px; margin-bottom: 30px; box-shadow: 0 4px 8px rgba(0, 71, 171, 0.1); } .thank-you-message h2 { color: var(--primary-color); margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; } .thank-you-message hr { width: 50%; margin: 20px auto; border-color: #91D5FF; }
+        .workshop-info-footer { margin-top: 40px; text-align: center; color: #555; padding: 20px; border-top: 1px solid var(--border-color); background-color: #f8f9fa; border-radius: 0 0 8px 8px; } .workshop-info-footer h3 { color: var(--primary-color); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; } .workshop-info-footer p { margin-bottom: 5px; font-size: 0.95em; display: flex; align-items: center; justify-content: center; gap: 6px; } .workshop-info-footer strong { color: var(--text-color); } .workshop-info-footer i { color: var(--primary-color); width: 1em; text-align: center; } .workshop-info-footer hr { width: 40%; margin: 20px auto; }
+        .profile-details dl { margin: 0; padding: 0; list-style: none; } .profile-details dt { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary-color); margin-right: 6px; padding-top: 0; margin-bottom: 0; text-align: left; border-bottom: none; } .profile-details dt i { width: 1.2em; text-align: center; flex-shrink: 0; } .profile-details dt::after { content: ":"; } .profile-details dd { display: inline; margin-left: 0; margin-bottom: 0; padding-bottom: 0; border-bottom: none; word-wrap: break-word; } .profile-details dd::after { content: ""; display: block; margin-bottom: 12px; } .profile-details dd:last-of-type::after { margin-bottom: 0; } .profile-details { padding: 1.5rem; }
+        .workshop-intro { background-color: #fff; padding: 30px 40px; border-radius: 8px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); margin-bottom: 30px; border-left: 5px solid var(--accent-color); } .workshop-intro h2 { color: var(--primary-color); font-family: var(--font-heading); margin-top: 0; margin-bottom: 1rem; font-size: 1.8em; display: flex; align-items: center; gap: 10px; } .workshop-intro h3 { color: var(--primary-color); font-family: var(--font-heading); margin-top: 1.5em; margin-bottom: 0.8em; font-size: 1.4em; display: flex; align-items: center; gap: 8px; padding-bottom: 5px; border-bottom: 1px solid var(--border-color); } .workshop-intro p { margin-bottom: 1em; line-height: 1.7; } .workshop-intro ul { list-style: none; padding-left: 0; } .workshop-intro ul li { padding-left: 1.5em; position: relative; margin-bottom: 0.6em; } .workshop-intro ul li::before { content: '✔'; color: var(--success-color); position: absolute; left: 0; font-weight: bold; } .workshop-intro ul.who-is-it-for li::before { content: '✓'; color: var(--primary-color); } .workshop-intro ul.what-youll-learn li::before { content: '💡'; color: inherit; font-size: 0.9em; top: 0.1em; } .workshop-intro ul.must-haves li::before { content: '✓'; color: var(--primary-color); }
+        .workshop-closing-note { margin-top: 2rem; padding: 1rem 1.5rem; background-color: var(--secondary-color); border-left: 5px solid var(--primary-color); border-radius: 4px; text-align: center; font-style: italic; color: var(--primary-color); font-size: 1.1em; line-height: 1.6; } .workshop-closing-note i { color: var(--accent-color); margin-right: 8px; }
+        .faq-section { background-color: #fff; padding: 30px 40px; border-radius: 8px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); margin-bottom: 30px; border-left: 5px solid var(--primary-color); } .faq-section h2 { color: var(--primary-color); font-family: var(--font-heading); margin-top: 0; margin-bottom: 1.5rem; font-size: 2em; text-align: center; display: flex; align-items: center; justify-content: center; gap: 10px; } .faq-item { margin-bottom: 1.8rem; padding-bottom: 1.5rem; border-bottom: 1px dashed var(--border-color); } .faq-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; } .faq-question { font-family: var(--font-heading); color: var(--primary-color); font-weight: 700; font-size: 1.3em; margin-bottom: 0.8em; display: flex; align-items: center; gap: 8px; } .faq-question i { color: var(--accent-color); font-size: 0.9em; } .faq-answer { padding-left: 2.0em; line-height: 1.7; color: var(--text-color); } .faq-answer p:last-child { margin-bottom: 0; }
+
+        /* --- FOOTER STYLES --- */
+        .site-footer {
+            background-color: var(--success-color);
+            color: var(--light-text-color);
+            padding: 30px 0 15px 0;
+            margin-top: 0; /* Footer is pushed down by flex-grow, no top margin needed */
+            border-top: 3px solid var(--accent-color);
+            flex-shrink: 0; /* Prevent footer from shrinking */
+        }
+        .footer-container {
+            width: 90%;
+            max-width: 1100px; /* Default */
+            margin: 0 auto;
+            text-align: center;
+        }
+        /* ... rest of footer styles ... */
+         .footer-images-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 100px; /* Default gap */
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        .footer-image {
+           max-width: 100%;
+           height: auto;
+           display: block;
+           border-radius: 5px;
+           max-width: 500px; /* Default max size */
+        }
+        .footer-address {
+            margin-top: 20px;
+            font-size: 0.95em;
+            line-height: 1.0;
+        }
+        .footer-address h3 {
+             font-size: 1.2em; /* Ensure h3 has a base size */
+             margin-bottom: 0.5em;
+        }
+        .footer-address p { margin-bottom: 0.5em; }
+         .footer-address ul {
+             list-style: none;
+             padding-left: 0;
+             margin-top: 0.5em;
+             display: inline-block;
+             text-align: left;
          }
-         @media (max-width: 992px) {
+         .footer-address li { margin-bottom: 0.3em; }
+        .footer-address strong { color: var(--accent-color); }
+        .footer-copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.85em;
+            color: rgba(255, 255, 255, 0.7);
+            width: 90%; /* Inherit from footer-container */
+            max-width: 1100px; /* Match footer-container */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        /* ===================================== */
+        /* --- RESPONSIVE ADJUSTMENTS START --- */
+        /* ===================================== */
+
+        /* --- NAVBAR COLLAPSE (Existing rule, now grouped) --- */
+        @media (max-width: 991.98px) {
              .navbar .container { flex-wrap: wrap; }
              .navbar-toggler { display: block; }
              .navbar-collapse {
@@ -171,296 +294,187 @@
              }
          }
 
-        /* --- GENERAL CONTENT STYLES (unchanged) --- */
-        h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); color: var(--primary-color); margin-top: 1.5em; margin-bottom: 0.8em; }
-        h1 { font-size: 2.5em; line-height: 1.2; } h2 { font-size: 2em; line-height: 1.25; } h3 { font-size: 1.75em; line-height: 1.3; } h4 { font-size: 1.5em; line-height: 1.35; }
-        p { margin-bottom: 1em; }
-        a { color: var(--primary-color); text-decoration: none; transition: color 0.3s ease; }
-        a:hover { text-decoration: underline; color: #003380; }
-        ul, ol { padding-left: 25px; margin-bottom: 1em; }
-        li { margin-bottom: 0.5em; }
-        hr { border: 0; height: 1px; background-color: var(--border-color); margin: 2em 0; }
-
-        /* --- UTILITY CLASSES (unchanged) --- */
-        .text-center { text-align: center; } .mb-1 { margin-bottom: 0.25rem; } .mb-2 { margin-bottom: 0.5rem; } .mb-3 { margin-bottom: 1rem; } .mb-4 { margin-bottom: 1.5rem; } .mt-3 { margin-top: 1rem; } .mt-4 { margin-top: 1.5rem; } .py-4 { padding-top: 1.5rem; padding-bottom: 1.5rem; } .px-3 { padding-left: 1rem; padding-right: 1rem; } .fw-bold { font-weight: 700; } .text-primary { color: var(--primary-color) !important; } .text-secondary { color: #555 !important; } .text-muted { color: #6c757d !important; } .lead { font-size: 1.25rem; font-weight: 300; } .rounded { border-radius: 0.375rem; } .shadow { box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); }
-
-        /* --- BUTTONS (unchanged) --- */
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 400; line-height: 1.5; color: var(--light-text-color); text-align: center; text-decoration: none; vertical-align: middle; cursor: pointer; user-select: none; background-color: var(--primary-color); border: 1px solid var(--primary-color); padding: 0.5rem 1rem; font-size: 1rem; border-radius: 0.375rem; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; } .btn i { line-height: 1; } .btn:hover { background-color: #003380; border-color: #002a69; color: var(--light-text-color); text-decoration: none; } .btn:focus { outline: 0; box-shadow: 0 0 0 0.25rem rgba(0, 71, 171, 0.5); } .btn-lg { padding: 0.75rem 1.5rem; font-size: 1.25rem; gap: 10px; } .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.875rem; gap: 5px; } .btn-secondary { color: var(--text-color); background-color: #6c757d; border-color: #6c757d; } .btn-secondary:hover { background-color: #5a6268; border-color: #545b62; color: var(--light-text-color); } .btn-secondary:focus { box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.5); } .btn-success { color: #fff; background-color: var(--success-color); border-color: var(--success-color); } .btn-success:hover { background-color: #1f7a36; border-color: #1a632d; } .btn-success:focus { box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.5); } .btn.disabled, .btn:disabled { pointer-events: none; opacity: 0.65; }
-
-        /* --- FORMS (unchanged) --- */
-        .form-label { display: block; margin-bottom: 0.5rem; font-weight: 700; } label[for$='*']::after, .radio-group-label.required::after, span.required::after { content: " *"; color: var(--error-color); margin-left: 2px; } .form-control { display: block; width: 100%; padding: 0.5rem 0.75rem; font-size: 1rem; font-weight: 400; line-height: 1.5; color: var(--text-color); background-color: #fff; background-clip: padding-box; border: 1px solid var(--border-color); border-radius: 0.375rem; transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; box-sizing: border-box; } textarea.form-control { min-height: calc(1.5em + 1rem + 2px); } .form-control:focus { color: var(--text-color); background-color: #fff; border-color: var(--primary-color); outline: 0; box-shadow: 0 0 0 0.25rem rgba(0, 71, 171, 0.25); } .form-check { display: block; min-height: 1.5rem; padding-left: 1.75em; margin-bottom: 0.5rem; position: relative; } .form-check .form-check-input { float: left; margin-left: -1.75em; margin-top: 0.15em; width: 1.25em; height: 1.25em; cursor: pointer; } .form-check input[type="radio"] { border-radius: 50%; } .form-check input[type="checkbox"] { border-radius: 0.25em; } .form-check input[type="radio"]:checked, .form-check input[type="checkbox"]:checked { background-color: var(--primary-color); border-color: var(--primary-color); } .form-check input[type="radio"]:focus, .form-check input[type="checkbox"]:focus { border-color: var(--primary-color); outline: 0; box-shadow: 0 0 0 0.25rem rgba(0, 71, 171, 0.25); } .form-check .form-check-label { display: inline-block; cursor: pointer; padding-top: 0.10em; } .radio-group-label { font-weight: 700; display: block; margin-bottom: 0.5rem; } .invalid-feedback { display: none; width: 100%; margin-top: 0.25rem; font-size: 0.875em; color: var(--error-color); } .form-control.is-invalid, textarea.is-invalid, select.is-invalid, .form-check-input.is-invalid { border-color: var(--error-color); background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23D8000C'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23D8000C' stroke='none'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1rem 1rem; padding-right: calc(1.5em + 0.75rem); } .form-control.is-invalid:focus, textarea.is-invalid:focus, select.is-invalid:focus, .form-check-input.is-invalid:focus { border-color: var(--error-color); box-shadow: 0 0 0 0.25rem rgba(216, 0, 12, 0.25); } .form-check-input.is-invalid ~ .form-check-label { color: var(--error-color); } .input-group.is-invalid .invalid-feedback, .form-control.is-invalid ~ .invalid-feedback, .form-check-input.is-invalid ~ .invalid-feedback { display: block; }
-
-        /* --- CARD STYLES (unchanged) --- */
-        .card { position: relative; display: flex; flex-direction: column; min-width: 0; word-wrap: break-word; background-color: #fff; background-clip: border-box; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 4px 8px rgba(0,0,0,0.08); } .card-header { padding: 1rem 1.25rem; margin-bottom: 0; background-color: var(--secondary-color); border-bottom: 1px solid rgba(0, 0, 0, 0.1); font-weight: 700; color: var(--primary-color); display: flex; align-items: center; gap: 8px; } .card-header:first-child { border-radius: 8px 8px 0 0; } .card-body { flex: 1 1 auto; padding: 1.5rem; } .card-footer { padding: 1rem 1.25rem; background-color: #f8f9fa; border-top: 1px solid rgba(0, 0, 0, 0.1); } .card-footer:last-child { border-radius: 0 0 8px 8px; }
-
-        /* --- ALERT STYLES (unchanged) --- */
-        .alert { position: relative; padding: 1rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: 0.375rem; display: flex; align-items: center; gap: 10px; } .alert i { font-size: 1.25em; line-height: 1; } .alert-content { flex-grow: 1; } .alert-heading { color: inherit; font-family: var(--font-heading); margin-top: 0; margin-bottom: 0.5rem; font-size: 1.25em; } .alert-danger { color: #6a1a21; background-color: #f8d7da; border-color: #f5c2c7; } .alert-danger i { color: #842029; } .alert-warning { color: #664d03; background-color: #fff3cd; border-color: #ffecb5; } .alert-warning i { color: #cca300; } .alert-info { color: #055160; background-color: #cff4fc; border-color: #b6effb; } .alert-info i { color: #067084; } .alert-success { color: #0a3622; background-color: #d1e7dd; border-color: #badbcc; } .alert-success i { color: #0f5132; }
-
-        /* --- WORKSHOP HEADER (unchanged, used in home.html now) --- */
-        .workshop-header { text-align: center; margin-top: 20px; margin-bottom: 20px; padding: 30px 20px; background: linear-gradient(135deg, var(--secondary-color), #ffffff); color: var(--text-color); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-left: 5px solid var(--primary-color); } .workshop-header h1 { margin-bottom: 15px; font-weight: 700; color: var(--primary-color); font-size: 2.8em; } .workshop-header .lead { color: #555; margin-bottom: 10px; font-size: 1.3em; } .workshop-header .organizer { font-style: italic; color: var(--primary-color); font-weight: 500; margin-top: 15px; } .workshop-header hr { width: 60%; margin: 25px auto; border: none; border-top: 2px dashed var(--primary-color); opacity: 0.6; } .workshop-header h1 i, .workshop-header .organizer i { margin-right: 8px; } .workshop-details p { margin-bottom: 8px; font-size: 1.1em; line-height: 1.5; display: flex; align-items: center; justify-content: center; gap: 8px; } .workshop-details p strong { color: var(--primary-color); } .workshop-details i { color: var(--primary-color); width: 1.2em; text-align: center; flex-shrink: 0; } .workshop-details .deadline { color: #777; font-size: 0.95em; } .workshop-details .deadline strong { color: #777; }
-
-        /* --- REGISTRATION FORM & PROFILE SECTION (unchanged) --- */
-        .registration-form, .profile-section { background: var(--light-text-color); padding: 35px 40px; border-radius: 8px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); margin-bottom: 30px; } .form-section-title { margin-top: 30px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--primary-color); font-size: 1.4em; color: var(--primary-color); display: flex; align-items: center; gap: 8px; } .registration-form h4:first-of-type, .profile-section h4:first-of-type { margin-top: 0; } .input-group { margin-bottom: 1.5rem; }
-
-        /* --- THANK YOU MESSAGE (unchanged, used in register.html now) --- */
-        .thank-you-message { text-align: center; padding: 40px 20px; background-color: #E6F7FF; border: 1px solid #91D5FF; color: #0050B3; border-radius: 8px; margin-bottom: 30px; box-shadow: 0 4px 8px rgba(0, 71, 171, 0.1); } .thank-you-message h2 { color: var(--primary-color); margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; } .thank-you-message hr { width: 50%; margin: 20px auto; border-color: #91D5FF; }
-
-        /* --- WORKSHOP INFO FOOTER (unchanged, used in register.html now) --- */
-        .workshop-info-footer { margin-top: 40px; text-align: center; color: #555; padding: 20px; border-top: 1px solid var(--border-color); background-color: #f8f9fa; border-radius: 0 0 8px 8px; } .workshop-info-footer h3 { color: var(--primary-color); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; } .workshop-info-footer p { margin-bottom: 5px; font-size: 0.95em; display: flex; align-items: center; justify-content: center; gap: 6px; } .workshop-info-footer strong { color: var(--text-color); } .workshop-info-footer i { color: var(--primary-color); width: 1em; text-align: center; } .workshop-info-footer hr { width: 40%; margin: 20px auto; }
-
-        /* --- Profile Page Specific Styles (unchanged) --- */
-        .profile-details dl { margin: 0; padding: 0; list-style: none; }
-        .profile-details dt { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary-color); margin-right: 6px; padding-top: 0; margin-bottom: 0; text-align: left; border-bottom: none; }
-        .profile-details dt i { width: 1.2em; text-align: center; flex-shrink: 0; }
-        .profile-details dt::after { content: ":"; }
-        .profile-details dd { display: inline; margin-left: 0; margin-bottom: 0; padding-bottom: 0; border-bottom: none; word-wrap: break-word; }
-        .profile-details dd::after { content: ""; display: block; margin-bottom: 12px; }
-        .profile-details dd:last-of-type::after { margin-bottom: 0; }
-        .profile-details { padding: 1.5rem; }
-
-        /* --- NEW: Workshop Intro Section Styles (for home.html) --- */
-        .workshop-intro {
-            background-color: #fff; /* White background like card */
-            padding: 30px 40px;
-            border-radius: 8px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1); /* Match registration form shadow */
-            margin-bottom: 30px;
-            border-left: 5px solid var(--accent-color); /* Use accent color */
-        }
-        .workshop-intro h2 {
-            color: var(--primary-color); /* Match heading style */
-            font-family: var(--font-heading);
-            margin-top: 0; /* Remove top margin for first heading in section */
-            margin-bottom: 1rem;
-            font-size: 1.8em; /* Adjust size as needed */
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .workshop-intro h3 {
-            color: var(--primary-color);
-            font-family: var(--font-heading);
-            margin-top: 1.5em;
-            margin-bottom: 0.8em;
-            font-size: 1.4em; /* Slightly smaller than h2 */
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .workshop-intro p {
-            margin-bottom: 1em;
-            line-height: 1.7; /* Slightly more spacing for readability */
-        }
-        .workshop-intro ul {
-            list-style: none; /* Remove default bullets */
-            padding-left: 0;
-        }
-        .workshop-intro ul li {
-            padding-left: 1.5em; /* Indent list items */
-            position: relative;
-            margin-bottom: 0.6em;
-        }
-        .workshop-intro ul li::before {
-            content: '✔'; /* Use checkmark or other icon */
-            color: var(--success-color); /* Or var(--primary-color) */
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-        /* Specific styling for the 'who is it for' list */
-        .workshop-intro ul.who-is-it-for li::before {
-             content: '✓'; /* Different check or icon if desired */
-             color: var(--primary-color);
-        }
-         /* Specific styling for the 'what you'll learn' list */
-        .workshop-intro ul.what-youll-learn li::before {
-             content: '💡'; /* Use the sparkle emoji */
-             color: inherit; /* Inherit text color, emoji has its own color */
-             font-size: 0.9em; /* Adjust emoji size if needed */
-             /* Position adjustments might be needed depending on the emoji */
-             top: 0.1em;
-        }
-        /* Specific styling for the 'must-haves' list */
-        .workshop-intro ul.must-haves li::before {
-             content: '✔';
-             color: var(--success-color);
+        /* --- XXL Screens (Very Large Desktops) --- */
+        @media (min-width: 1400px) {
+            /* Select the main content container specifically, not the navbar container */
+            .container:not(.navbar .container), .footer-container, .footer-copyright {
+                max-width: 1320px;
+            }
         }
 
-        /* --- NEW: Workshop Closing Note Styles (for home.html) --- */
-        .workshop-closing-note {
-            margin-top: 2rem; /* Add some space above the note */
-            padding: 1rem 1.5rem;
-            background-color: var(--secondary-color); /* Light background */
-            border-left: 5px solid var(--accent-color); /* Vibrant accent border */
-            border-radius: 4px;
-            text-align: center; /* Center the text */
-            font-style: italic; /* Add emphasis */
-            color: var(--primary-color); /* Use primary text color for contrast */
-            font-size: 1.1em; /* Slightly larger font */
-            line-height: 1.6;
-        }
-        .workshop-closing-note i {
-            color: var(--accent-color); /* Make the icon vibrant */
-            margin-right: 8px;
-        }
-        /* --- NEW: Form Disclaimer Styles (for register.html) --- */
-        .form-disclaimer {
-            font-size: 0.9em; /* Smaller font size */
-            font-style: italic; /* Italic font */
-            color: #555; /* Slightly muted text color */
-            background-color: #f8f9fa; /* Light background for subtle emphasis */
-            border-left: 4px solid var(--accent-color); /* Vibrant accent border */
-            padding: 10px 15px;
-            margin-top: 1.5rem; /* Space above the disclaimer */
-            margin-bottom: 1.5rem; /* Space below disclaimer, before button */
-            border-radius: 4px;
-            line-height: 1.5;
-        }
-        .form-disclaimer strong {
-            color: var(--primary-color); /* Highlight ministry name */
-            font-style: normal; /* Keep ministry name non-italic */
-        }
-        .navbar-brand:hover {
-        color: var(--light-text-color); /* Keep the original text color */
-        text-decoration: none;          /* Explicitly remove underline on hover */
-        background-color: transparent;  /* Ensure no background color appears on hover */
-        /* Add any other styles back to their default if needed */
-        }
-        /* --- FOOTER STYLES (Revised Layout) --- */
-        .site-footer {
-            background-color: var(--success-color);
-            color: var(--light-text-color);
-            padding: 30px 0 15px 0;
-            margin-top: 40px;
-            border-top: 3px solid var(--accent-color);
-        }
-        .footer-container {
-            width: 90%;
-            max-width: 1100px; /* Standard width */
-            margin: 0 auto;
-            text-align: center; /* Center content by default */
+        /* --- XL Screens (Large Desktops) --- */
+        @media (min-width: 1200px) and (max-width: 1399.98px) {
+            .container:not(.navbar .container), .footer-container, .footer-copyright {
+                max-width: 1140px;
+            }
         }
 
-        /* Styles for the image row */
-        .footer-images-row {
-            display: flex;
-            justify-content: center; /* Center images within the row */
-            align-items: center; /* Align images vertically */
-            gap: 100px; /* Space between images */
-            flex-wrap: wrap; /* Allow images to wrap on small screens */
-            margin-bottom: 25px; /* Space below images, before address */
+        /* --- LG Screens (Laptops/Desktops) --- */
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .container:not(.navbar .container), .footer-container, .footer-copyright {
+                max-width: 960px;
+            }
         }
 
-        .footer-image {
-           /* Responsive base styles */
-           max-width: 100%;
-           height: auto;
-           display: block; /* Or inline-block if preferred */
-           border-radius: 5px;
-
-           /* Control Max Display Size */
-           /* Adjust this value for desired image size */
-           max-width: 500px; /* Setting max width based on your previous HTML */
+        /* --- MD Screens (Tablets) --- */
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            .container:not(.navbar .container), .footer-container, .footer-copyright {
+                width: 95%;
+                max-width: 720px;
+            }
+            h1 { font-size: 2.2em; }
+            h2 { font-size: 1.8em; }
+            .workshop-header h1 { font-size: 2.5em; }
+            .registration-form, .profile-section, .workshop-intro, .faq-section { padding: 25px 30px; }
+            .footer-images-row { gap: 50px; }
         }
 
-        /* Styles for the address block */
-        .footer-address {
-            margin-top: 20px; /* Ensure space if images wrap */
-            font-size: 0.95em;
-            line-height: 1.0;
-             /* Remove text-align: center if you want left-aligned text below */
-             /* text-align: left; */
-             /* max-width: 600px; */ /* Optional: constrain width of address block */
-             /* margin-left: auto; */  /* Optional: center the address block */
-             /* margin-right: auto; */ /* Optional: center the address block */
-        }
-        .footer-address p {
-            margin-bottom: 0.5em;
-        }
-         .footer-address ul {
-             list-style: none;
-             padding-left: 0; /* Remove padding for centered list */
-             margin-top: 0.5em;
-             display: inline-block; /* Allows centering of the list block */
-             text-align: left; /* Keep list items left-aligned */
-         }
-         .footer-address li {
-              margin-bottom: 0.3em;
-         }
-        .footer-address strong {
-            color: var(--accent-color);
-        }
-
-        /* Styles for the copyright line */
-        .footer-copyright {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            font-size: 0.85em;
-            color: rgba(255, 255, 255, 0.7);
-            width: 90%;
-            max-width: 1100px;
-            margin-left: auto;
-            margin-right: auto;
+        /* --- SM Screens (Large Phones / Portrait Tablets) --- */
+        @media (min-width: 576px) and (max-width: 767.98px) {
+            body { padding-top: 70px; }
+             /* Apply only to the main content container */
+            .container:not(.navbar .container) {
+                width: 95%;
+                max-width: 540px;
+                padding-left: 15px; /* Add some horizontal padding */
+                padding-right: 15px;
+                padding-top: 15px;
+                padding-bottom: 30px; /* Adjust bottom padding */
+            }
+             .footer-container, .footer-copyright {
+                 width: 95%;
+                 max-width: 540px;
+            }
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.6em; }
+            h3 { font-size: 1.4em; }
+            .workshop-header h1 { font-size: 2.1em; }
+            .workshop-header .lead { font-size: 1.1em; }
+            .workshop-details p { font-size: 1em; }
+            .registration-form, .profile-section, .workshop-intro, .faq-section { padding: 20px; }
+            .card-body, .card-header, .card-footer { padding: 1rem; }
+            .btn { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+            .btn-lg { padding: 0.6rem 1.2rem; font-size: 1.1rem; }
+            .form-control { padding: 0.4rem 0.6rem; font-size: 0.9rem; }
+            .footer-images-row { flex-direction: column; gap: 20px; align-items: center; }
+            .footer-image { max-width: 300px; }
+            .footer-address h3 { font-size: 1.1em; }
+            .footer-address p { font-size: 0.9em; }
+            .faq-question { font-size: 1.15em; }
+            .faq-answer { padding-left: 1.5em; }
         }
 
+        /* --- XS Screens (Phones) --- */
+        @media (max-width: 575.98px) {
+            body { padding-top: 65px; font-size: 15px; }
+             /* Apply only to the main content container */
+            .container:not(.navbar .container) {
+                width: 96%;
+                 padding-left: 10px; /* Add some horizontal padding */
+                 padding-right: 10px;
+                 padding-top: 10px;
+                 padding-bottom: 20px; /* Adjust bottom padding */
+            }
+             .footer-container, .footer-copyright {
+                 width: 96%;
+            }
+            .navbar .container { padding: 0 2%; } /* Reduce navbar container padding */
+            .navbar-brand { font-size: 1.4em; } /* Smaller brand */
+            .navbar-brand img { height: 45px; } /* Adjust logo size */
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.5em; }
+            h3 { font-size: 1.3em; }
+            h4 { font-size: 1.1em; }
+            .workshop-header { padding: 20px 15px; }
+            .workshop-header h1 { font-size: 1.8em; }
+            .workshop-header .lead { font-size: 1em; }
+            .workshop-details p { font-size: 0.95em; gap: 5px; flex-direction: column; align-items: center;} /* Stack details */
+            .workshop-details p i { margin-bottom: 3px; } /* Space below icon when stacked */
+            .registration-form, .profile-section, .workshop-intro, .faq-section { padding: 15px; margin-left: 0; margin-right: 0; width: auto; } /* Remove margin */
+            .card-body, .card-header, .card-footer { padding: 0.8rem; }
+            .btn { padding: 0.35rem 0.7rem; font-size: 0.85rem; }
+            .btn-lg { padding: 0.5rem 1rem; font-size: 1rem; }
+            .form-control, .form-label, .form-check-label { font-size: 0.9rem; }
+            .form-section-title { font-size: 1.2em; }
+            .footer-images-row { flex-direction: column; gap: 15px; align-items: center; }
+            .footer-image { max-width: 250px; }
+            .footer-address { text-align: center; }
+            .footer-address ul { text-align: left; display: inline-block; }
+            .footer-address h3 { font-size: 1em; }
+            .footer-address p { font-size: 0.85em; }
+            .faq-question { font-size: 1.1em; }
+            .faq-answer { padding-left: 1.2em; }
+            /* Stack Profile Definition List */
+            .profile-details dt, .profile-details dd { display: block; text-align: left; }
+            .profile-details dt { margin-bottom: 2px; border-bottom: none; font-weight: bold; }
+            .profile-details dt i { margin-right: 5px; }
+            .profile-details dt::after { content: ""; }
+            .profile-details dd { margin-left: 0; padding-left: 1.7em; } /* Indent data slightly */
+            .profile-details dd::after { margin-bottom: 10px; }
+        }
 
+        /* =================================== */
+        /* --- RESPONSIVE ADJUSTMENTS END --- */
+        /* =================================== */
+        .nav-link-home i.fa-home {
+        font-size: 1.6em;
+        }
     </style>
 </head>
 <body>
     {# --- NAVBAR HTML --- #}
     <nav class="navbar">
-      <div class="container">
-        {# Link the brand to the new home page #}
-        <a class="navbar-brand" href="{% url 'home' %}"><img src="https://media-sytes.mp4movies101.stream/tagc%20logo.jpg" alt="TAGC Livelihood Ministry Logo" height="60">&nbsp;Livelihood Ministry</a>
+      <div class="container"> {# This container is styled differently inside navbar rules #}
+        <a class="navbar-brand" href="{% url 'home' %}"><img src="https://media-sytes.mp4movies101.stream/tagc%20logo.jpg" alt="TAGC Livelihood Ministry Logo">&nbsp;Livelihood Ministry</a>
         <button class="navbar-toggler" type="button" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fas fa-bars"></i>
         </button>
         <div class="navbar-collapse" id="navbarNav">
-          {# Left-aligned nav items (if any) #}
           <ul class="navbar-nav">
-             {# Add links to specific workshops or sections if needed later #}
-             {# Example: <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li> #}
+             <li class="nav-item">
+                 </li>
           </ul>
-
-          {# Right-aligned nav items #}
           <ul class="navbar-nav">
-             {# My Profile Link #}
              <li class="nav-item">
                 {% if request.session.registration_id %}
-                    {# Link active if user is registered/logged in #}
                     <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" href="{% url 'profile' %}">
                         <i class="fas fa-user-circle"></i> My Profile
                     </a>
                 {% else %}
-                    {# Link disabled if user is not registered/logged in #}
                      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
                         <i class="fas fa-user-circle"></i> My Profile
                      </a>
                 {% endif %}
             </li>
-            {# Register Link #}
+            <li class="nav-item">
+              <a class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}" href="{% url 'faq' %}">
+                <i class="fas fa-question-circle"></i> FAQ
+              </a>
+            </li>
             <li class="nav-item">
               <a class="nav-link {% if request.resolver_match.url_name == 'register' %}active{% endif %}" href="{% url 'register' %}">
                 <i class="fas fa-clipboard-list"></i> Register
               </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-link-home {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}" aria-label="Home"> {# Added nav-link-home class #}
+                  <i class="fas fa-home"></i>
+                </a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    {# --- CONTAINER FOR CONTENT (unchanged) --- #}
+    {# --- CONTAINER FOR CONTENT --- #}
+    {# This container will grow to fill space #}
     <div class="container">
         {% block content %}
         {# Content from child templates will go here #}
         {% endblock %}
     </div>
 
-    {# --- NAVBAR TOGGLE SCRIPT (unchanged) --- #}
+    {# --- NAVBAR TOGGLE SCRIPT --- #}
     <script>
       document.addEventListener('DOMContentLoaded', function() {
           const toggler = document.querySelector('.navbar-toggler');
@@ -473,6 +487,7 @@
                   toggler.setAttribute('aria-expanded', isExpanded);
               });
           }
+           // Close mobile menu when a link is clicked
            const navLinks = document.querySelectorAll('.navbar-collapse .nav-link');
            navLinks.forEach(link => {
                link.addEventListener('click', () => {
@@ -490,26 +505,21 @@
     {% block extra_js %}
     {# Optional block for page-specific JavaScript #}
     {% endblock %}
-    {# --- FOOTER (Revised Layout) --- #}
+
+    {# --- FOOTER --- #}
+    {# This footer will be pushed to the bottom #}
     <footer class="site-footer">
         <div class="footer-container">
-
-            {# Row for side-by-side images #}
             <div class="footer-images-row">
                 <img src="https://media-sytes.mp4movies101.stream/footer_left.png" alt="Footer Image Left" class="footer-image">
                 <img src="https://media-sytes.mp4movies101.stream/footer_right.png" alt="Footer Image Right" class="footer-image">
             </div>
-
-            {# Address block below the images #}
             <div class="footer-address">
                 <h3><strong>Tagum Alliance Gospel Church</strong></h3>
                 <p><strong>Address:</strong>&nbsp;National Highway, Tagum City, Davao del Norte, Philippines</p>
                 <p><strong>Landmark:</strong>&nbsp;Next to Visayan Village Central Elementary School</p>
             </div>
-
-        </div> {# End footer-container #}
-
-        {# Copyright line remains at the bottom #}
+        </div>
         <div class="footer-copyright">
             &copy; {% now "Y" %} TAGC Livelihood Ministry. All Rights Reserved.
         </div>
