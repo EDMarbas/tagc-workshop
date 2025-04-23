@@ -211,11 +211,12 @@
         /* ... rest of footer styles ... */
          .footer-images-row {
             display: flex;
-            justify-content: center;
+            justify-content: space-between; /* Position images at opposite ends */
             align-items: center;
-            gap: 100px; /* Default gap */
-            flex-wrap: wrap;
+            /* gap: 100px; */ /* Remove the large fixed gap */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
             margin-bottom: 25px;
+            
         }
         .footer-image {
            max-width: 100%;
@@ -223,6 +224,10 @@
            display: block;
            border-radius: 5px;
            max-width: 500px; /* Default max size */
+           width: 48.5%;         /* Set width to slightly less than half to create a small gap */
+           height: auto;
+           display: block;
+           border-radius: 5px;
         }
         .footer-address {
             margin-top: 20px;
@@ -300,12 +305,30 @@
             .container:not(.navbar .container), .footer-container, .footer-copyright {
                 max-width: 1320px;
             }
+            .footer-images-row {
+                flex-direction: row;           
+                justify-content: space-between;
+                gap: 0;                        
+            }
+            .footer-image {
+                width: 48.5%;                  
+                max-width: none;                
+            }
         }
 
         /* --- XL Screens (Large Desktops) --- */
         @media (min-width: 1200px) and (max-width: 1399.98px) {
             .container:not(.navbar .container), .footer-container, .footer-copyright {
                 max-width: 1140px;
+            }
+            .footer-images-row {
+                flex-direction: row;           /* Change to row layout */
+                justify-content: space-between;/* Use space-between */
+                gap: 0;                        /* Remove gap when using space-between */
+            }
+            .footer-image {
+                width: 48.5%;                  /* Set width for two images side-by-side */
+                max-width: none;                 /* Remove any smaller screen max-width limit */
             }
         }
 
@@ -314,6 +337,7 @@
             .container:not(.navbar .container), .footer-container, .footer-copyright {
                 max-width: 960px;
             }
+            
         }
 
         /* --- MD Screens (Tablets) --- */
@@ -326,7 +350,15 @@
             h2 { font-size: 1.8em; }
             .workshop-header h1 { font-size: 2.5em; }
             .registration-form, .profile-section, .workshop-intro, .faq-section { padding: 25px 30px; }
-            .footer-images-row { gap: 50px; }
+            .footer-images-row {
+                flex-direction: row;           
+                justify-content: space-between;
+                gap: 0;                        
+            }
+            .footer-image {
+                width: 48.5%;                  
+                max-width: none;                
+            }
         }
 
         /* --- SM Screens (Large Phones / Portrait Tablets) --- */
@@ -356,8 +388,15 @@
             .btn { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
             .btn-lg { padding: 0.6rem 1.2rem; font-size: 1.1rem; }
             .form-control { padding: 0.4rem 0.6rem; font-size: 0.9rem; }
-            .footer-images-row { flex-direction: column; gap: 20px; align-items: center; }
-            .footer-image { max-width: 300px; }
+            .footer-images-row {
+                flex-direction: row;           
+                justify-content: space-between;
+                gap: 0;                        
+            }
+            .footer-image {
+                width: 48.5%;                  
+                max-width: none;                
+            }
             .footer-address h3 { font-size: 1.1em; }
             .footer-address p { font-size: 0.9em; }
             .faq-question { font-size: 1.15em; }
@@ -396,8 +435,12 @@
             .btn-lg { padding: 0.5rem 1rem; font-size: 1rem; }
             .form-control, .form-label, .form-check-label { font-size: 0.9rem; }
             .form-section-title { font-size: 1.2em; }
-            .footer-images-row { flex-direction: column; gap: 15px; align-items: center; }
-            .footer-image { max-width: 250px; }
+            .footer-images-row {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+            .footer-image { width: 100%; }
             .footer-address { text-align: center; }
             .footer-address ul { text-align: left; display: inline-block; }
             .footer-address h3 { font-size: 1em; }
