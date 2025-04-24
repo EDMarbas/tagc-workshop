@@ -32,6 +32,9 @@ class RegistrationForm(forms.ModelForm):
             'full_name',
             'email',
             'location',
+            'age_group',
+            'current_situation',
+            'freelance_experience'
         ]
         widgets = {
             'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First and Last Name'}),
