@@ -128,21 +128,21 @@
                     <hr class="my-4">
 
                     <!-- UNCOMMENT IF THE REGISTRATION IS STARTING -->
-                    <div class="text-center">
+                    <!-- <div class="text-center">
                         <button type="submit" class="btn btn-primary btn-lg">
                              <i class="fas fa-paper-plane"></i> SUBMIT REGISTRATION
                          </button>
-                    </div>
+                    </div> -->
                     
                     <!-- COMMENT THIS WHEN REGISTRATION IS STARTING -->
-                    <!-- {# --- MODIFIED BUTTON --- #}
+                    {# --- MODIFIED BUTTON --- #}
                     <div class="text-center">
                         {# Changed type="submit" to type="button" and added an ID #}
                         <button type="button" id="submit-registration-btn" class="btn btn-primary btn-lg">
                              <i class="fas fa-paper-plane"></i> SUBMIT REGISTRATION
                          </button>
                     </div>
-                    {# --- END MODIFIED BUTTON --- #} -->
+                    {# --- END MODIFIED BUTTON --- #}
 
 
 
@@ -163,7 +163,7 @@
 {% endblock %}
 
 <!-- COMMENT THIS ALSO WHEN REGISTRATION STARTS -->
-<!-- {% block extra_js %}
+{% block extra_js %}
 <script>
     // Wait for the document to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
@@ -175,7 +175,7 @@
             // Add a click event listener to the button
             submitButton.addEventListener('click', function(event) {
                 // Show the simple alert message
-                alert('Currently unavailable.');
+                alert('Registration closed.');
 
                 // Note: Because the button type is now "button" instead of "submit",
                 // the form won't try to submit automatically.
@@ -185,4 +185,4 @@
         }
     });
 </script>
-{% endblock %} -->
+{% endblock %}
