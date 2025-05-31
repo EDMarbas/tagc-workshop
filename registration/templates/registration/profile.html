@@ -27,8 +27,14 @@
       <dt><i class="fas fa-birthday-cake"></i> Age Group</dt>
       <dd>{{ registration.get_age_group_display }}</dd>
 
-      <dt><i class="fas fa-briefcase"></i> Current Situation</dt>
-      <dd>{{ registration.get_current_situation_display }}</dd>
+      <dt><i class="fas fa-briefcase"></i>  Educational Background</dt>
+      <dd>{{ registration.get_education_display }}</dd>
+      
+      <dt><i class="fas fa-briefcase"></i>  Course / Major</dt>
+      <dd>{{ registration.course }}</dd>
+
+      <dt><i class="fas fa-briefcase"></i>  Employment Status</dt>
+      <dd>{{ registration.get_work_status_display }}</dd>
 
       <dt><i class="fas fa-chart-line"></i> Freelancing Experience</dt>
       <dd>{{ registration.get_freelance_experience_display }}</dd>

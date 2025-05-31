@@ -31,13 +31,15 @@ class RegistrationAdmin(admin.ModelAdmin):
         'email',
         'location',
         'age_group',
-        'current_situation',
+        'education',
+        'course',
+        'work_status',
         'freelance_experience',
         'registered_at'
     )
     list_filter = (
         'age_group',
-        'current_situation',
+        'education',
         'freelance_experience',
         'registered_at',
         'location' # Added location filtering

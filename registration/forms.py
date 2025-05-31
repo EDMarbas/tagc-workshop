@@ -1,7 +1,6 @@
 # registration/forms.py
 from django import forms
-# Import the model AND the choices lists from your models file
-from .models import Registration, AGE_CHOICES, SITUATION_CHOICES, EXPERIENCE_CHOICES
+from .models import Registration, AGE_CHOICES, EXPERIENCE_CHOICES, EDUCATION_CHOICES, WORK_STATUS_CHOICES
 
 class RegistrationForm(forms.ModelForm):
     # --- Explicitly define the choice fields here ---
@@ -11,18 +10,26 @@ class RegistrationForm(forms.ModelForm):
         widget=forms.RadioSelect(attrs={'class': 'form-check-input'}),
         required=True # Make the form field explicitly required
     )
-    current_situation = forms.ChoiceField(
-        label='Which option best describes your current situation?',
-        choices=SITUATION_CHOICES,
-        widget=forms.RadioSelect(attrs={'class': 'form-check-input'}),
-        required=True
-    )
     freelance_experience = forms.ChoiceField(
         label='Do you have any experience in Online Freelancing?',
         choices=EXPERIENCE_CHOICES,
         widget=forms.RadioSelect(attrs={'class': 'form-check-input'}),
         required=True
     )
+
+    education = forms.ChoiceField(
+        label='What is your current educational status?',
+        choices=EDUCATION_CHOICES,
+        widget=forms.RadioSelect(attrs={'class': 'form-check-input'}),
+        required=True
+    )
+
+    work_status = forms.ChoiceField(
+        label='Employment Status',
+        choices=WORK_STATUS_CHOICES,
+        widget=forms.RadioSelect(attrs={'class': 'form-check-input'}),
+        required=True
+    )    
     # --- End explicit definitions ---
 
     class Meta:
@@ -33,17 +40,21 @@ class RegistrationForm(forms.ModelForm):
             'email',
             'location',
             'age_group',
-            'current_situation',
-            'freelance_experience'
+            'freelance_experience',
+            'education',
+            'work_status',
+            'course',
         ]
         widgets = {
             'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First and Last Name'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'your.email@example.com'}),
             'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City/Municipality'}),
+            'course': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g., STEM, BSBA in Marketing, AB English'}),
          
         }
         labels = {
             'full_name': 'Full Name (First and Last Name) *',
             'email': 'Email Address *',
             'location': 'Location (City/Municipality) *',
+            'course': 'Course / Major:'
         }

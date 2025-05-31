@@ -20,14 +20,14 @@
             <hr>
             <h3><i class="fas fa-chalkboard-teacher"></i>&nbsp;GRIT & GRACE FREELANCING</h3>
             <p><strong><i class="fas fa-map-marked-alt"></i> Where:</strong> Tagum Alliance Gospel Church</p>
-            <p><strong><i class="fas fa-calendar-alt"></i> When:</strong> May 18, 2025 | 2:00 – 4:30 PM</p>
+            <p><strong><i class="fas fa-calendar-alt"></i> When:</strong> June 12, 2025 | 1:00 – 5:00 PM</p>
         </div>
 
     {% else %}
         {# Registration Form Section #}
         <div class="registration-form card">
             <div class="card-body">
-                <h4 class="mb-4 text-center" style="font-size: 1.1em; color: #333333;">Please fill out the form below to reserve your spot. Registration is open until <span style="color: red;">May 16, 2025.</span></h4>
+                <h4 class="mb-4 text-center" style="font-size: 1.1em; color: #333333;">Please fill out the form below to reserve your spot. Registration is open until <span style="color: red;">June 8, 2025.</span></h4>
                 <br>
                 <br>
                 <form method="post" novalidate class="needs-validation">
@@ -93,21 +93,51 @@
                         {% endif %}
                     </div>
 
-                    {# Current Situation #}
+
+                    <!-- Educational Background -->
                     <div class="input-group mb-3 {% if form.current_situation.errors %}is-invalid{% endif %}">
-                        <span class="radio-group-label required">{{ form.current_situation.label }}</span> {# Added required class #}
-                         {% for radio in form.current_situation %}
+                        <span class="radio-group-label required">{{ form.education.label }}</span>
+                         {% for radio in form.education %}
                         <div class="form-check">
-                            {{ radio.tag|attr:"class:form-check-input"|add_error_class:form.current_situation.errors }}
+                            {{ radio.tag|attr:"class:form-check-input"|add_error_class:form.education.errors }}
                             <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
                         </div>
                         {% endfor %}
-                         {% if form.current_situation.errors %}
+                         {% if form.education.errors %}
                             <div class="invalid-feedback">
-                                {% for error in form.current_situation.errors %} {{ error }} {% endfor %}
+                                {% for error in form.education.errors %} {{ error }} {% endfor %}
+                            </div>
+                         {% endif %}
+                        
+                        <!-- Course -->
+                        <div class="input-group mb-3">
+                            <label for="{{ form.course.id_for_label }}" class="form-label">{{ form.course.label }}</label>
+                            {{ form.course.as_widget|attr:"class:form-control"|attr:"required"|add_error_class:form.course.errors }}
+                            {% if form.course.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.course.errors %} {{ error }} {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    
+                    <!-- Work Status -->
+                    <div class="input-group mb-3 {% if form.work_status.errors %}is-invalid{% endif %}">
+                        <span class="radio-group-label required">{{ form.work_status.label }}</span>
+                         {% for radio in form.work_status %}
+                        <div class="form-check">
+                            {{ radio.tag|attr:"class:form-check-input"|add_error_class:form.work_status.errors }}
+                            <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                        </div>
+                        {% endfor %}
+                         {% if form.work_status.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.work_status.errors %} {{ error }} {% endfor %}
                             </div>
                          {% endif %}
                     </div>
+
 
                     {# Freelance Experience #}
                     <div class="input-group mb-3 {% if form.freelance_experience.errors %}is-invalid{% endif %}">
@@ -128,21 +158,21 @@
                     <hr class="my-4">
 
                     <!-- UNCOMMENT IF THE REGISTRATION IS STARTING -->
-                    <!-- <div class="text-center">
+                    <div class="text-center">
                         <button type="submit" class="btn btn-primary btn-lg">
                              <i class="fas fa-paper-plane"></i> SUBMIT REGISTRATION
                          </button>
-                    </div> -->
+                    </div>
                     
                     <!-- COMMENT THIS WHEN REGISTRATION IS STARTING -->
-                    {# --- MODIFIED BUTTON --- #}
+                    <!-- {# --- MODIFIED BUTTON --- #}
                     <div class="text-center">
                         {# Changed type="submit" to type="button" and added an ID #}
                         <button type="button" id="submit-registration-btn" class="btn btn-primary btn-lg">
                              <i class="fas fa-paper-plane"></i> SUBMIT REGISTRATION
                          </button>
                     </div>
-                    {# --- END MODIFIED BUTTON --- #}
+                    {# --- END MODIFIED BUTTON --- #} -->
 
 
 
@@ -163,7 +193,7 @@
 {% endblock %}
 
 <!-- COMMENT THIS ALSO WHEN REGISTRATION STARTS -->
-{% block extra_js %}
+<!-- {% block extra_js %}
 <script>
     // Wait for the document to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
@@ -185,4 +215,4 @@
         }
     });
 </script>
-{% endblock %}
+{% endblock %} -->
